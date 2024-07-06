@@ -1,15 +1,21 @@
 import express from "express";
 import sequelize from './connection/sequelize.js';
 import dotenv from 'dotenv';
-dotenv.config();
+import cors from 'cors';
+import check from './middleware/middle.js';
 // import router from './route/router.js';
 import userRouter from './route/userRoute.js';
+import cookieParser from "cookie-parser";
+dotenv.config();
 
 
 const app= express();
 const port=process.env.PORT;
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(cors());
+app.use(check("cook"));
 
 // app.use('/',router);
 app.use('/user',userRouter);

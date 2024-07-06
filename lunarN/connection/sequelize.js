@@ -8,4 +8,17 @@ const sequelize = new Sequelize('lunar', 'root', '', {
   logging: false,
 });
 
+function connected(){
+  try{
+
+    sequelize.authenticate();
+    console.log("Connected");
+
+  }
+  catch(err){
+    throw new Error(err);
+  }
+}
+connected();
+
 export default sequelize;
