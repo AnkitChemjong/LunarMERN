@@ -1,6 +1,15 @@
 import db from "../db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import dotenv from 'dotenv';
+import fs from 'fs';
+dotenv.config();
+import {v2 as cloudinary} from 'cloudinary';
+cloudinary.config({ 
+  cloud_name: process.env.CN, 
+  api_key:process.env.AK , 
+  api_secret:process.env.AS
+});
 
 const generateToken = (user) => {
   const token=jwt.sign({ id: user.userId, email: user.email }, 'secret_key', { expiresIn: '1h' });
@@ -57,9 +66,9 @@ export const registerUser = async (req, res) => {
          const hashedPassword = await bcrypt.hash(password, 10);
          const time=new Date().toISOString().slice(0, 19).replace('T', ' ');
    
-         const sql = "INSERT INTO auth (`userName`,`email`,`password`,`createdAt`) VALUES (?,?,?,?)";
-   
-         db.query(sql, [userName, email, hashedPassword,time], (err, result) => {
+         const sql = "INSERT INTO auth (`userName`,`email`,`password`,`userImage`,`createdAt`) VALUES (?,?,?,?,?)";
+         const x=await cloudinary.uploader.upload(req.file.path);  
+         db.query(sql, [userName, email, hashedPassword,x.url,time], (err, result) => {
              if (err) {
                  // Check for duplicate entry error (e.g., duplicate email)
                  if (err.code === 'ER_DUP_ENTRY') {
@@ -67,6 +76,12 @@ export const registerUser = async (req, res) => {
                  }
                  return res.status(500).send({ message: "Database query error", error: err });
              }
+             fs.unlink((req.file.path),(err)=>{
+              if(err){
+                console.log(err.message);
+              }
+              console.log("unlinked");
+             })
    
              res.status(201).send({ message: "Registration successful", result });
          });
