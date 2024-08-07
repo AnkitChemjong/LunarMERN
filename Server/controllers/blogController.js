@@ -18,7 +18,7 @@ export const createBlog = (req, res) => {
   
     db.query(sql,(err,result)=>{
         if(err) return res.status(500).send(err);
-        return res.status(200).json({message:"get details", result})
+        return res.status(200).json({message:"get details", result:result})
     });
   };
   
@@ -41,8 +41,8 @@ export const createBlog = (req, res) => {
       const blogId =await req.params.id;
       const userId=await req.user.id;
       const {title,description}=req.body;
-      const sql1="select * from blog where blogId = ?";
-      db.query(sql1,[blogId],(err,result)=>{
+      const sql1="select * from blog where blogId = ? and userId=?";
+      db.query(sql1,[blogId,userId],(err,result)=>{
         if (err) {res.send(err);}
         if(result.length===0){
           res.send("No blog found");

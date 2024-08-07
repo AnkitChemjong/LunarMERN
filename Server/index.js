@@ -1,11 +1,12 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv'
-import path from 'path';
+import passport from 'passport';
 import authRoutes from './routes/authRoutes.js';
 import blogRoutes from './routes/blogRoutes.js';
 import cookieParser from 'cookie-parser';
 import { authUser } from './middleware/authToken.js';
+
 
 
 dotenv.config()
@@ -16,18 +17,22 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors({
-    origin:'http://localhost:3001',
+    origin:process.env.FURL,
     methods:['GET','POST','PUT','DELETE','PATCH'],
     credentials:true,
     allowedHeaders:['Content-Type','Authorization']
 }));
-
-app.use(authUser('token'));
+app.use(passport.initialize());
+app.use(authUser('cook'));
 
 app.use('/', authRoutes)
 app.use('/', blogRoutes)
 app.get('/user',(req,res)=>{
     res.send(req.user);
+})
+
+app.get('/gog',(req,res)=>{
+    res.redirect(process.env.FURL)
 })
 
 const PORT = process.env.PORT

@@ -11,8 +11,8 @@ cloudinary.config({
   api_secret:process.env.AS
 });
 
-const generateToken = (user) => {
-  const token=jwt.sign({ id: user.userId, email: user.email }, 'secret_key', { expiresIn: '1h' });
+export const generateToken = (user) => {
+  const token=jwt.sign({ id: user.userId, email: user.email,userImage:user.userImage,userName:user.userName,createdAt:user.createdAt}, 'secret_key', { expiresIn: '1h' });
   return token;
 };
 
@@ -41,7 +41,7 @@ export const loginUser = (req, res) => {
 
     const token = generateToken(user);
 
-    res.cookie('token', token,{httpOnly:true,maxAge:3600000});
+    res.cookie('cook', token,{httpOnly:true,maxAge:3600000});
 
     return res.status(200).send({ message: "Login successful", token, user: { id: user.userId, username: user.userName, email: user.email } });
   });
@@ -93,3 +93,10 @@ export const registerUser = async (req, res) => {
 };
 
 
+const giveLogUser=(req,res)=>{
+  res.json({user:req.user});
+}
+export const deleteCookie=(req,res)=>{
+  res.clearCookie('cook').send("cookie deleted");
+};
+export default giveLogUser;

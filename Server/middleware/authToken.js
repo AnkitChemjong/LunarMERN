@@ -33,7 +33,7 @@ export const authUser = (tokens) => {
 
     try {
       const decoded = jwt.verify(token, 'secret_key');
-      req.user = { id: decoded.id, email: decoded.email }; 
+      req.user =decoded; 
       next();
     } catch (error) {
       res.status(400).json({ message: error.message });

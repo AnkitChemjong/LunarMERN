@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
+  const navigate=useNavigate();
   const [data, setData] = useState({
     userName: '',
     email: '',
@@ -14,6 +17,10 @@ const Login = (props) => {
       ...prev,
       [name]: files ? files[0] : value,
     }));
+  };
+  const google=async (req, res) => {
+    window.location.href = 'http://localhost:8080/auth/google';
+  //await axios.get('http://localhost:8080/auth/google');
   };
 
   const formData=new FormData();
@@ -129,7 +136,9 @@ const Login = (props) => {
             </div>
           </div>
           <div className="w-full flex justify-center">
-            <button className="flex items-center bg-white border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+            <button
+            type='button'
+             onClick={google} className="flex items-center bg-white border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
               <svg
                 className="h-6 w-6 mr-2"
                 xmlns="http://www.w3.org/2000/svg"

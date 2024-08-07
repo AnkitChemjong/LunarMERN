@@ -1,15 +1,46 @@
-import React, { useState} from "react";
+import React, { useEffect, useState} from "react";
 import { Link,useNavigate} from "react-router-dom";
 import axios from "axios";
+import { user } from "../store/slice/userSlice";
+import { useSelector,useDispatch } from "react-redux";
 
 const NavBar = () => {
+  const dispatch =useDispatch();
+  useEffect(()=>{
+       dispatch(user());
+  },[]);
+  const users=useSelector((state)=>{return state.user.data});
+  //console.log(user);
   const navigate=useNavigate();
   const [toggl, setToggl] = useState(false);
   const tog = () => {
     setToggl(!toggl);
   };
+  useEffect(() => {
+    let timer;
+  
+    const listener = () => {
+      if (document.hidden) {
+        timer = setTimeout(() => {
+          deleteCookie();
+          navigate('/login');
+        }, 15 * 60 * 1000); // 15 minutes
+      } else {
+        clearTimeout(timer);
+      }
+    };
+  
+    document.addEventListener('visibilitychange', listener);
+  
+    return () => {
+      document.removeEventListener('visibilitychange', listener);
+      clearTimeout(timer);
+    };
+  }, []);
+  
   const deleteCookie=async ()=>{
-    await axios.delete('http://localhost:8080/delete').then(()=>{
+    await axios.delete('http://localhost:8080/deleteCookie').then(()=>{
+      dispatch(user());
       navigate('/');
       alert("cookie is deleted");
       //window.location.reload();
@@ -45,13 +76,14 @@ const NavBar = () => {
             </div>
           </div>
       
-
+{users===null? (
+  <>
         <Link to="/signin">
                   <button
                     href="#"
                     className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white mr-4"
                     role="menuitem"
-                    tabindex="-1"
+                    tabIndex="-1"
                     id="user-menu-item-0"
                   >
                    SignIn
@@ -62,13 +94,16 @@ const NavBar = () => {
                   href="#"
                   className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white ml-4"
                   role="menuitem"
-                  tabindex="-1"
+                  tabIndex="-1"
                   id="user-menu-item-2"
                 >
                   LogIn
                 </button>
                 </Link>
-          
+</>
+):
+(
+
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
           <div className="relative ml-3">
             <div>
@@ -82,7 +117,7 @@ const NavBar = () => {
               >
                 <img
                   className="h-8 w-8 rounded-full"
-                  src='http://res.cloudinary.com/dzr2ad20j/image/upload/v1722503136/h8erkctcmluy2dfjyanh.png'
+                  src={users.userImage}
                   alt=""
                 />
               </button>
@@ -94,14 +129,14 @@ const NavBar = () => {
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="user-menu-button"
-                tabindex="-1"
+                tabIndex="-1"
               >
                   <button
                   onClick={profile}
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700"
                     role="menuitem"
-                    tabindex="-1"
+                    tabIndex="-1"
                     id="user-menu-item-0"
                   >
                     Your Profile
@@ -111,7 +146,7 @@ const NavBar = () => {
                   href="#"
                   className="block px-4 py-2 text-sm text-gray-700"
                   role="menuitem"
-                  tabindex="-1"
+                  tabIndex="-1"
                   id="user-menu-item-2"
                 >
                   Sign out
@@ -120,8 +155,7 @@ const NavBar = () => {
             )}
           </div>
         </div>
-        
-
+)}
         </div>
       </div>
     </nav>
