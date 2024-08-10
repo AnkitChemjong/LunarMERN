@@ -49,16 +49,31 @@ export const loginUser = (req, res) => {
 
 
 export const registerUser = async (req, res) => {
+  if(!req.file){
+    return res.status(400).send("File is Required");
+  }
   const { userName, email, password } = req.body;
   const sql1="Select * from auth where email=(?)";
   db.query(sql1,[email],async (err,result)=>{
    //console.log(result);
    if(result.length > 0)  
    {
+    fs.unlink((req.file.path),(err)=>{
+      if(err){
+        console.log(err.message);
+      }
+      console.log("unlinked");
+     })
      res.send("please enter another email");
    }
    else{
      if (!userName || !email || !password) {
+      fs.unlink((req.file.path),(err)=>{
+        if(err){
+          console.log(err.message);
+        }
+        console.log("unlinked");
+       })
          return res.status(400).send({ message: "Username, email, and password are required" });
      }
      try {
@@ -72,6 +87,12 @@ export const registerUser = async (req, res) => {
              if (err) {
                  // Check for duplicate entry error (e.g., duplicate email)
                  if (err.code === 'ER_DUP_ENTRY') {
+                  fs.unlink((req.file.path),(err)=>{
+                    if(err){
+                      console.log(err.message);
+                    }
+                    console.log("unlinked");
+                   })
                      return res.status(409).send({ message: "Email already registered" });
                  }
                  return res.status(500).send({ message: "Database query error", error: err });
