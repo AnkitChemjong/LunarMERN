@@ -22,5 +22,7 @@ const storage=multer.diskStorage({
     }
 })
 
-const uploadUser=multer({storage:storage,fileFilter:checkImage});
+const uploadUser=multer({storage:storage,fileFilter:checkImage,limits: {
+    fileSize:  10* 1024 * 1024 // 10MB limit
+}});
 export default uploadUser;

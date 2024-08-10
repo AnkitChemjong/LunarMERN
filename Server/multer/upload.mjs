@@ -2,7 +2,7 @@ import multer from 'multer';
 import path from 'path';
 
 const checkImage=(req,file,cb)=>{
-    const types=/png|jpg|<jpeg /
+    const types=/png|jpg|jpeg/
     //we can do the if(types.test(file.mimetype)) also
     const allowedImageTypes=['image/png', 'image/jpg', 'image/jpeg'];
     if(allowedImageTypes.includes(file.mimetype)){
@@ -24,5 +24,7 @@ const storage=multer.diskStorage({
     }
 })
 
-const upload=multer({storage:storage,fileFilter:checkImage});
+const upload=multer({storage:storage,fileFilter:checkImage,limits: {
+    fileSize:  10* 1024 * 1024 // 10MB limit
+  }});
 export default upload;

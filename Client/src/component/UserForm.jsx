@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { handleLogin,handleSignUp } from './HandleUserAuth.js';
+
 
 const Login = (props) => {
-  const navigate=useNavigate();
+
   const [data, setData] = useState({
     userName: '',
     email: '',
     password: '',
     userImage: null,
   });
+
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -37,10 +38,14 @@ const Login = (props) => {
   const handleSubmit=(e)=>{
      e.preventDefault();
      if(props.type==='sign'){
-       props.func(formData);
+      if(handleSignUp(data.userName,data.email,data.password,data.userImage)){
+        props.func(formData);
+      }
      }
      else{
-      props.func(logData);
+      if(handleLogin(data.email,data.password)){
+        props.func(logData);
+      }
      }
   }
 

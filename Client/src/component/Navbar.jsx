@@ -13,6 +13,7 @@ const NavBar = () => {
   //console.log(user);
   const navigate=useNavigate();
   const [toggl, setToggl] = useState(false);
+
   const tog = () => {
     setToggl(!toggl);
   };
@@ -43,12 +44,14 @@ const NavBar = () => {
       dispatch(user());
       navigate('/');
       alert("cookie is deleted");
+      tog();
       //window.location.reload();
 
     }).catch((err)=>{console.log("Error deleting cookie")});
   }
   const profile= ()=>{
-      navigate('/profile');
+    tog();
+    navigate('/profile');
   }
   return (
     <nav className="bg-gray-800 h-20">
@@ -105,6 +108,17 @@ const NavBar = () => {
 (
 
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <Link to='/blog'>
+                <button
+                  href="#"
+                  className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white ml-4"
+                  role="menuitem"
+                  tabIndex="-1"
+                  id="user-menu-item-2"
+                >
+                Add Blog
+                </button>
+                </Link>
           <div className="relative ml-3">
             <div>
               <button

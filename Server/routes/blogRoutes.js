@@ -6,7 +6,7 @@ import { createBlog, deleteBlog, getBlog, updateBlog } from "../controllers/blog
 
 const blogRoutes = express.Router();
 
-blogRoutes.post('/create',authToken,upload.single('image'), createBlog)
+blogRoutes.post('/create',authToken,upload.single('blogImage'), createBlog)
 blogRoutes.get('/get', getBlog)
 blogRoutes.delete('/delete', deleteBlog)
 blogRoutes.put('/update/:id', updateBlog)
