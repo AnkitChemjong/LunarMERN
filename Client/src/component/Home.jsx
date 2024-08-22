@@ -7,7 +7,7 @@ const Home = () => {
   useEffect(()=>{
      dispatch(blogs());
   },[]);
-  const blog=useSelector((state)=>{return state.blogs.data});
+  const blog=useSelector((state)=>{return state.blogs.data})||[];
   return (
     <>
 <div className='mt-5'>
@@ -17,7 +17,7 @@ const Home = () => {
       <div className="group relative rounded-lg overflow-hidden bg-white hover:shadow-2xl border-2 border-gray-950 m-2" data-aos-duration="500" data-aos="flip-left" data-aos-easing="ease-in-sine" key={blogs.blogId}>
         <div className="h-40">
           <img
-            src={blogs.blogImage}
+            src={`http://localhost:8080/${blogs.blogImage}`}
             alt="City"
             className="h-40 w-full object-cover object-center"
           />
@@ -41,11 +41,11 @@ const Home = () => {
               >
                 <img
                   className="h-8 w-8 rounded-full"
-                  src={blogs.user.userImage}
+                  src={blogs.userImage}
                   alt=""
                 />
               </button>
-            <h2> <strong className=" ms-10 text-sm font-bold text-orange-500">{blogs.user.userName}</strong></h2>
+            <h2> <strong className=" ms-10 text-sm font-bold text-orange-500">{blogs.userName}</strong></h2>
          </div>
         </div>
       </div>

@@ -67,7 +67,7 @@ export const registerUser = async (req, res) => {
      res.send("please enter another email");
    }
    else{
-     if (!userName || !email || !password) {
+     if (!userName || !password) {
       fs.unlink((req.file.path),(err)=>{
         if(err){
           console.log(err.message);
@@ -113,11 +113,24 @@ export const registerUser = async (req, res) => {
  });
 };
 
+export const userBlog=(req,res)=>{
+  if(req.user){
+
+    const sql=`select * from blog where userId=(?)`;
+    db.query(sql,[req.user.id],(error,result)=>{
+     if(error) console.log(error);
+     return res.status(200).json({blog:result});
+    })
+  }
+  else{
+    return res.status(404).json({blog:[]})
+  }
+}
 
 const giveLogUser=(req,res)=>{
-  res.json({user:req.user});
+  return res.json({user:req.user});
 }
 export const deleteCookie=(req,res)=>{
-  res.clearCookie('cook').send("cookie deleted");
+  return res.clearCookie('cook').send("cookie deleted");
 };
 export default giveLogUser;

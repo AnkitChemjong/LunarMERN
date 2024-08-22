@@ -6,6 +6,7 @@ import authRoutes from './routes/authRoutes.js';
 import blogRoutes from './routes/blogRoutes.js';
 import cookieParser from 'cookie-parser';
 import { authUser } from './middleware/authToken.js';
+import path from 'path';
 
 
 
@@ -22,6 +23,7 @@ app.use(cors({
     credentials:true,
     allowedHeaders:['Content-Type','Authorization']
 }));
+app.use(express.static(path.resolve('./upload')));
 app.use(passport.initialize());
 app.use(authUser('cook'));
 

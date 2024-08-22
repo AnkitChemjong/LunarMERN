@@ -2,9 +2,8 @@ import express from "express";
 import uploadUser from "../multer/userImage.mjs";
 import passport from "passport";
 import '../pass/google.mjs';
-import giveLogUser, { generateToken } from "../controllers/auth.js";
-import { loginUser, registerUser } from "../controllers/auth.js";
-import { deleteCookie } from "../controllers/auth.js";
+import giveLogUser,{ loginUser, registerUser,userBlog,deleteCookie,generateToken  } from "../controllers/auth.js";
+
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -22,6 +21,7 @@ authRoutes.get('/auth/callback',passport.authenticate('google',{session:false}),
 });
 authRoutes.get('/logUser',giveLogUser);
 authRoutes.delete('/deleteCookie',deleteCookie);
+authRoutes.get('/userBlog', userBlog)
 
 
 export default authRoutes;
