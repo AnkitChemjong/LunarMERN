@@ -42,7 +42,6 @@ export const createBlog =async (req, res) => {
       const blogId =await req.params.id;
       const userId=await req.user.id;
       const {title,description}=req.body;
-      console.log(blogId,userId,title,description,req.file)
       const sql1="select * from blog where blogId = ? and userId=?";
       const img=`blog/${req.file.filename}`;
       db.query(sql1,[blogId,userId],(err,result)=>{
