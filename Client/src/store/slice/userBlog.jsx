@@ -18,7 +18,6 @@ const userBlogs=createSlice({
         builder.addCase(userBlog.fulfilled,(state,action)=>{
            state.status="fulfilled";
            state.data=action.payload;
-           console.log(action.payload);
         })
         .addCase(userBlog.pending,(state,action)=>{
             state.status="pending";

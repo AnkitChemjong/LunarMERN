@@ -13,6 +13,7 @@ const MakeBlog = () => {
             
         }).catch((error)=>{
           toast.error(error.message,{position:'top-center'})
+          console.log(error)
         });
 
     }

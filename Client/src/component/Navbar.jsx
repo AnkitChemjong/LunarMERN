@@ -1,10 +1,11 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useRef, useState} from "react";
 import { Link,useNavigate} from "react-router-dom";
 import axios from "axios";
 import { user } from "../store/slice/userSlice";
 import { useSelector,useDispatch } from "react-redux";
 
 const NavBar = () => {
+  const proImg=useRef();
   const dispatch =useDispatch();
   useEffect(()=>{
        dispatch(user());
@@ -15,7 +16,14 @@ const NavBar = () => {
   const [toggl, setToggl] = useState(false);
 
   const tog = () => {
-    setToggl(!toggl);
+    if(toggl===false){
+     
+      setToggl(true);
+    }
+    else{
+    
+      setToggl(false);
+    }
   };
   useEffect(() => {
     let timer;
@@ -38,6 +46,20 @@ const NavBar = () => {
       clearTimeout(timer);
     };
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (proImg.current && !proImg.current.contains(event.target)) {
+        setToggl(false);
+      }
+    };
+  
+    document.addEventListener('click', handleClickOutside);
+    
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [toggl]);
   
   const deleteCookie=async ()=>{
     await axios.delete('http://localhost:8080/deleteCookie').then(()=>{
@@ -122,6 +144,7 @@ const NavBar = () => {
           <div className="relative ml-3">
             <div>
               <button
+                ref={proImg}
                 onClick={tog}
                 type="button"
                 className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"

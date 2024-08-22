@@ -1,17 +1,68 @@
-import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState,useRef } from 'react';
 import {useSelector,useDispatch } from 'react-redux';
 import { userBlog } from '../store/slice/userBlog.jsx';
+import BlogForm from './BlogForm.jsx';
+import {toast} from 'react-toastify';
 
 const Profile = () => {
+  // const updateRef=useRef();
   const dispatch=useDispatch();
+  const [open,setOpen]=useState(false);
+  const [id,setId]=useState(null);
   const user=useSelector((state) =>{return state.user.data});
   useEffect( ()=>{
        dispatch(userBlog());
   },[]);
     const blog=useSelector((state)=>{return state.userB.data});
+    const deleteBlog=async (data)=>{
+      await axios.delete('http://localhost:8080/delete',{data:{data:data}}).then((response)=>{
+        if(response.status===200){
+          toast.success(
+            <div>
+              Deleted
+            </div>
+            ,{position:"top-right"}
+          )
+          dispatch(userBlog());
+        }
+      }).catch((error)=>{
+        console.log(error)
+      });
+    }
+
+    const updateBlog=async (data)=>{
+        await axios.put(`http://localhost:8080/update/${id}`,data).then(()=>{
+          toast.success(
+            <div>
+              updated
+            </div>
+            ,{position:"top-right"}
+
+          )
+          setOpen(false);
+          dispatch(userBlog());
+        }).catch((error)=>{
+          console.log(error)
+        });
+    }
+//     useEffect(()=>{
+//      const func=(e)=>{
+//       if(updateRef.current && !updateRef.current.contains(e.target)){
+//         setOpen(false);
+//       }
+//      }
+
+//      document.addEventListener("click",func);
+
+// return ()=>{
+//   document.removeEventListener("click",func);
+// }
+
+//     },[open]);
 
   return (
-    <div className='w-full h-[100vh] bg-slate-400 justify-start items-center flex flex-col'>
+    <div className='w-full h-[100vh] bg-slate-400 justify-start items-center flex flex-col relative'>
         
             <div className='w-1/4 h-2/4 bg-gray-950 mt-20 flex flex-col md:mt-36'>
                 
@@ -25,7 +76,7 @@ const Profile = () => {
 
             {blog.map((value,index)=>{
               return (
-                <div className="group relative rounded-lg overflow-hidden bg-white hover:shadow-2xl border-2 border-gray-950 m-2" data-aos-duration="500" data-aos="flip-left" data-aos-easing="ease-in-sine" key={index}>
+                <div className="group relative rounded-lg  bg-white hover:shadow-2xl border-2 border-gray-950 m-2" data-aos-duration="500" data-aos="flip-left" data-aos-easing="ease-in-sine" key={index}>
                 <div className="h-40">
                   <img
                      src={`http://localhost:8080/${value.blogImage}`}
@@ -40,9 +91,22 @@ const Profile = () => {
                   <p className="text-sm font-bold text-orange-500">{value.description}</p>
                  
                 </div>
+                <div className='flex flex-row gap-5'>
+                  <button className='bg-red-400 rounded-xl p-2 border-2 border-x-teal-800 hover:scale-150' onClick={()=>deleteBlog(value)}>Delete</button>
+                  <button  onClick={()=>{
+                    setId(value.blogId);
+                    console.log(value.blogId);
+                    setOpen(true);
+                  }} className='bg-red-400 rounded-xl p-2 border-2 border-x-teal-800 hover:scale-150'>Update</button>
+                </div>
               </div>
               )
             })}
+
+           <div className='absolute w-[full] h-[100%]'>
+
+            {open && <BlogForm type="update" close={setOpen} func={updateBlog}/>}
+           </div>
        
       
     </div>

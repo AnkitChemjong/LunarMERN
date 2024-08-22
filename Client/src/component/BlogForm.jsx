@@ -31,6 +31,9 @@ const BlogForm = (props) => {
     <form onSubmit={handleSubmit}>
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-md mt-5">
+        {props.type==='update' && (
+           <button className='bg-red-400 rounded-xl p-2 border-2 border-x-teal-800 hover:scale-150' onClick={()=>props.close(false)}>Cancel</button>
+        )}
         <div className="relative mb-5">
           <input
             autoComplete="off"
