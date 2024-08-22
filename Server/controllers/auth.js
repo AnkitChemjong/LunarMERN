@@ -107,7 +107,7 @@ export const registerUser = async (req, res) => {
              res.status(201).send({ message: "Registration successful", result });
          });
      } catch (err) {
-         res.status(500).send({ message: "Error hashing password", error: err });
+         res.status(500).send({ message: "Error hashing password...", error: err });
      }
    }
  });
