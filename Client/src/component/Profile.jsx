@@ -6,7 +6,7 @@ import BlogForm from './BlogForm.jsx';
 import {toast} from 'react-toastify';
 
 const Profile = () => {
-  // const updateRef=useRef();
+  const updateRef=useRef();
   const dispatch=useDispatch();
   const [open,setOpen]=useState(false);
   const [id,setId]=useState(null);
@@ -49,17 +49,17 @@ const Profile = () => {
 //     useEffect(()=>{
 //      const func=(e)=>{
 //       if(updateRef.current && !updateRef.current.contains(e.target)){
+//         console.log("hel")
 //         setOpen(false);
 //       }
 //      }
-
 //      document.addEventListener("click",func);
 
 // return ()=>{
 //   document.removeEventListener("click",func);
 // }
 
-//     },[open]);
+//     },[updateRef]);
 
   return (
     <div className='w-full h-[100vh] bg-slate-400 justify-start items-center flex flex-col relative'>
@@ -95,7 +95,6 @@ const Profile = () => {
                   <button className='bg-red-400 rounded-xl p-2 border-2 border-x-teal-800 hover:scale-150' onClick={()=>deleteBlog(value)}>Delete</button>
                   <button  onClick={()=>{
                     setId(value.blogId);
-                    console.log(value.blogId);
                     setOpen(true);
                   }} className='bg-red-400 rounded-xl p-2 border-2 border-x-teal-800 hover:scale-150'>Update</button>
                 </div>
@@ -103,7 +102,7 @@ const Profile = () => {
               )
             })}
 
-           <div className='absolute w-[full] h-[100%]'>
+           <div ref={updateRef} className='absolute w-[full] h-[100%]'>
 
             {open && <BlogForm type="update" close={setOpen} func={updateBlog}/>}
            </div>
