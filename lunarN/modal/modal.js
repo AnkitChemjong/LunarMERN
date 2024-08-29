@@ -5,12 +5,6 @@ import sequelize from '../connection/sequelize.js';
 import bcrypt from 'bcrypt';
 
 const User = sequelize.define('User', {
-    userId:{
-        type:DataTypes.INTEGER,
-        allowNull:false,
-        unique:true,
-        defaultValue:Math.random()*90
-    },
   userName: {
     type: DataTypes.STRING,
     allowNull: false

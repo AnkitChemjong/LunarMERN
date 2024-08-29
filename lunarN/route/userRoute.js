@@ -15,6 +15,6 @@ userRouter.delete('/clear',delCookie);
 userRouter.get('/get',giveUser);
 userRouter.delete('/email',del);
 userRouter.get('/getUser',getUser);
-userRouter.patch('/updateUser/:id',updateUser);
+userRouter.put('/updateUser/:id',updateUser);
 
 export default userRouter;
