@@ -10,6 +10,7 @@ import Aos from 'aos';
 import React,{ useEffect,useState } from 'react';
 import Loading from './component/Loading.jsx';
 import { useSelector } from 'react-redux';
+import NotFound from './component/NotFound.jsx';
 
 function App() {
   const [loading,setLoading]=useState(true);
@@ -38,6 +39,7 @@ function App() {
        <Router>
         <NavBar/>
          <Routes>
+         <Route path='*'  element={<NotFound/>}/>
            <Route path='/'  element={<Home/>}/>
            <Route path='/signin'  element={<SignIn/>}/>
            <Route path='/login'  element={<LogIn/>}/>

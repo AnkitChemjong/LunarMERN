@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState,useRef } from 'react';
 import {useSelector,useDispatch } from 'react-redux';
 import { userBlog } from '../store/slice/userBlog.jsx';
+import { blogs } from '../store/slice/blogSlice.jsx';
 import BlogForm from './BlogForm.jsx';
 import {toast} from 'react-toastify';
 
@@ -25,6 +26,7 @@ const Profile = () => {
             ,{position:"top-right"}
           )
           dispatch(userBlog());
+          dispatch(blogs());
         }
       }).catch((error)=>{
         console.log(error)
@@ -42,6 +44,7 @@ const Profile = () => {
           )
           setOpen(false);
           dispatch(userBlog());
+          dispatch(blogs());
         }).catch((error)=>{
           console.log(error)
         });
