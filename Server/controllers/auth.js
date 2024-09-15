@@ -11,6 +11,7 @@ cloudinary.config({
   api_secret:process.env.AS
 });
 
+
 export const generateToken = (user) => {
   const token=jwt.sign({ id: user.userId, email: user.email,userImage:user.userImage,userName:user.userName,createdAt:user.createdAt}, 'secret_key', { expiresIn: '1h' });
   return token;

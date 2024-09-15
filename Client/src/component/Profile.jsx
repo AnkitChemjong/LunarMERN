@@ -5,6 +5,28 @@ import { userBlog } from '../store/slice/userBlog.jsx';
 import { blogs } from '../store/slice/blogSlice.jsx';
 import BlogForm from './BlogForm.jsx';
 import {toast} from 'react-toastify';
+// import {v2 as cloudinary} from 'cloudinary'; //if you want to download the file from cloudinary
+// cloudinary.config({ 
+//   cloud_name: process.env.CN, 
+//   api_key:process.env.AK , 
+//   api_secret:process.env.AS
+// });
+
+// const handleDownloadFile = async (userImageUrlFormCloudinary) => {
+//   try {
+//     // Generate the file URL using the Cloudinary API
+//     const fileUrl = cloudinary.url(publicId, { secure: true });
+
+//     // Create a link element to download the file
+//     const a = document.createElement('a');
+//     a.href = fileUrl;
+//     a.setAttribute('download', fileUrl.split('/').pop()); // Set file name
+//     document.body.appendChild(a);
+//     a.click(); // Trigger the download
+//     document.body.removeChild(a); // Remove the link after the download
+//   } catch (error) {
+//     console.error('Error fetching file:', error);
+//   }
 
 const Profile = () => {
   const updateRef=useRef();
