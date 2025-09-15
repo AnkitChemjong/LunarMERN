@@ -62,7 +62,7 @@ const NavBar = () => {
   }, [toggl]);
   
   const deleteCookie=async ()=>{
-    await axios.delete('http://localhost:8080/deleteCookie').then(()=>{
+    await axios.delete('http://localhost:8000/deleteCookie').then(()=>{
       dispatch(user());
       navigate('/');
       alert("cookie is deleted");

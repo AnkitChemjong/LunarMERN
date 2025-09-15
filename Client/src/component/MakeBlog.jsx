@@ -7,7 +7,7 @@ import {toast} from 'react-toastify';
 const MakeBlog = () => {
     const navigate=useNavigate();
     const makeBlog=async (data)=>{
-        await axios.post('http://localhost:8080/create', data,{headers:{'Content-Type':'multipart/form-data'}}).then((response)=>{
+        await axios.post('http://localhost:8000/create', data,{headers:{'Content-Type':'multipart/form-data'}}).then((response)=>{
           toast.success(response.data.message,{position:'top-center'})
             navigate('/');
             

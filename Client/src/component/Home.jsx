@@ -17,7 +17,7 @@ const Home = () => {
       <div className="group relative rounded-lg overflow-hidden bg-white hover:shadow-2xl border-2 border-gray-950 m-2" data-aos-duration="500" data-aos="flip-left" data-aos-easing="ease-in-sine" key={blogs.blogId}>
         <div className="h-40">
           <img
-            src={`http://localhost:8080/${blogs.blogImage}`}
+            src={`http://localhost:8000/${blogs.blogImage}`}
             alt="City"
             className="h-40 w-full object-cover object-center"
           />

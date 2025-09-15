@@ -2,7 +2,7 @@ import { createSlice,createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const user=createAsyncThunk('user',async (req,res)=>{
-    const response=await axios.get('http://localhost:8080/logUser');
+    const response=await axios.get('http://localhost:8000/logUser');
     //console.log(response);
     return response.data.user;
 });

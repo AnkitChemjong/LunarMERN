@@ -9,7 +9,7 @@ const LogIn = () => {
   const navigate=useNavigate();
   const dispatch=useDispatch();
   const log=async (data)=>{
-     await axios.post('http://localhost:8080/login', data,{
+     await axios.post('http://localhost:8000/login', data,{
       headers:{
         'Content-Type':'application/json'
       }
@@ -19,7 +19,9 @@ const LogIn = () => {
       navigate('/');
   
   
-     }).catch((err)=>{alert(err.message);});
+     }).catch((err)=>{alert(err.response.data.message
+     );
+    console.log(err)});
   }
   return (
     <UserForm type='log' func={log}/>

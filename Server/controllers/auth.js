@@ -50,6 +50,7 @@ export const loginUser = (req, res) => {
 
 
 export const registerUser = async (req, res) => {
+  
   if(!req.file){
     return res.status(400).send("File is Required");
   }

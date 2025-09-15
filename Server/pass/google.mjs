@@ -11,7 +11,7 @@ passport.use(new GoogleStrategy({
     clientSecret:process.env.CS,
     scope:['profile','email'],
     passReqToCallback:true,
-    callbackURL:'http://localhost:8080/auth/callback'
+    callbackURL:'http://localhost:8000/auth/callback'
 
 },
 async (request,accessToken,refreshToken,profile,done)=>{

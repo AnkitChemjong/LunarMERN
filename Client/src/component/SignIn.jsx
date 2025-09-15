@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom/dist';
 const SignIn = () => {
   const navigate=useNavigate();
 const sign=async (data)=>{
-   await axios.post('http://localhost:8080/register', data,{
+   await axios.post('http://localhost:8000/register', data,{
     headers:{
       'Content-Type':'multipart/form-data'
     }
@@ -16,7 +16,9 @@ const sign=async (data)=>{
     navigate('/login');
 
 
-   }).catch((err)=>{alert(err.message);});
+   }).catch((err)=>{alert(err.message);
+    console.log(err)
+   });
 }
 
   return (

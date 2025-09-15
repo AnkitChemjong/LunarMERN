@@ -39,7 +39,7 @@ const Profile = () => {
   },[]);
     const blog=useSelector((state)=>{return state.userB.data});
     const deleteBlog=async (data)=>{
-      await axios.delete('http://localhost:8080/delete',{data:{data:data}}).then((response)=>{
+      await axios.delete('http://localhost:8000/delete',{data:{data:data}}).then((response)=>{
         if(response.status===200){
           toast.success(
             <div>
@@ -56,7 +56,7 @@ const Profile = () => {
     }
 
     const updateBlog=async (data)=>{
-        await axios.put(`http://localhost:8080/update/${id}`,data).then(()=>{
+        await axios.put(`http://localhost:8000/update/${id}`,data).then(()=>{
           toast.success(
             <div>
               updated
@@ -104,7 +104,7 @@ const Profile = () => {
                 <div className="group relative rounded-lg  bg-white hover:shadow-2xl border-2 border-gray-950 m-2" data-aos-duration="500" data-aos="flip-left" data-aos-easing="ease-in-sine" key={index}>
                 <div className="h-40">
                   <img
-                     src={`http://localhost:8080/${value.blogImage}`}
+                     src={`http://localhost:8000/${value.blogImage}`}
                     alt="City"
                     className="h-40 w-full object-cover object-center"
                   />
