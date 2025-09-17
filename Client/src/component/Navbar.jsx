@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState} from "react";
-import { Link,useNavigate} from "react-router-dom";
+// import { Link,useNavigate} from "react-router-dom";
+import { Link,useNavigate } from "@tanstack/react-router";
 import axios from "axios";
 import { user } from "../store/slice/userSlice";
 import { useSelector,useDispatch } from "react-redux";

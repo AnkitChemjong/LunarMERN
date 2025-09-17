@@ -1,7 +1,8 @@
 import React from 'react';
 import UserForm from './UserForm';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom/dist';
+// import { useNavigate } from 'react-router-dom/dist';
+import { useNavigate } from '@tanstack/react-router';
 import { user } from '../store/slice/userSlice';
 import {useDispatch } from 'react-redux';
 

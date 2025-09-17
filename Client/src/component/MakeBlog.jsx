@@ -1,7 +1,8 @@
 import React from 'react';
 import BlogForm from './BlogForm';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import {toast} from 'react-toastify';
 
 const MakeBlog = () => {
